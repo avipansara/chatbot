@@ -1,0 +1,18 @@
+{
+  "name": "reactchatbot",
+  "version": "1.0.0",
+  "description": "Chatbot for webpage",
+  "main": "index.js",
+  "engines":{
+    "node":"10.13.0",
+    "npm":"6.8.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Avee Pansara",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
