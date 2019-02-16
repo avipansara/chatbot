@@ -1,1 +1,2 @@
 heroku link: https://git.heroku.com/secret-scrubland-68630.git
+mongodb link: mongodb://<dbuser>:<dbpassword>@ds159662.mlab.com:59662/avee_chatbot

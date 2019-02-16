@@ -1,8 +1,10 @@
 'use strict'
 const dialogFlow = require('dialogflow');
-const structJSON = require('./structjson'); 
+const structJSON = require('./structjson.js'); 
+const mongoose = require('mongoose');
 const config = require('../config/keys');
 const projectID = config.googleProjectID;
+const sessionID = config.dialogFlowSessionID;
 const credentials = {
     client_email: config.googleClientEmail,
     private_key: config.googlePrivateKey
@@ -10,7 +12,9 @@ const credentials = {
 
 const sessionClient = new dialogFlow.SessionsClient({projectID, credentials});
 
-const sessionPath = sessionClient.sessionPath(config.googleProjectID, config.dialogFlowSessionID);
+const sessionPath = sessionClient.sessionPath(projectID,sessionID);
+
+const Registration = mongoose.model('registration');
 
 
 module.exports = {
