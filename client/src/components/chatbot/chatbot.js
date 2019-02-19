@@ -1,12 +1,11 @@
 import React from 'react';
 import axios from 'axios/index';
-import Cookies from 'universal-cookie';
-import {v4 as uuid} from 'uuid'; 
+//import Cookies from 'universal-cookie';
+//import {v4 as uuid} from 'uuid'; 
 import Message from './Message';
-import Card from './Card';
 import QuickReplies from './QuickReplies';
 
-const cookies = new Cookies(); 
+//const cookies = new Cookies(); 
 
 class Chatbot extends React.Component{
     messagesEnd; //React Refs
@@ -15,16 +14,16 @@ class Chatbot extends React.Component{
         super(props);
         this.show = this.show.bind(this);
         this.hide = this.hide.bind(this);
-        this._handleQuickReplyPayload = this._handleQuickReplyPayload.bind(this);
+       // this._handleQuickReplyPayload = this._handleQuickReplyPayload.bind(this);
         this._handleInputKeyPress= this._handleInputKeyPress.bind(this);
         this.state={
             messages:[],
             showBot: true
         };
 
-        if(cookies.get('userID') === undefined){
-            cookies.set('userID', uuid(),{path:'/'});
-        }
+        // if(cookies.get('userID') === undefined){
+        //     cookies.set('userID', uuid(),{path:'/'});
+        // }
     }
 
     async df_text_query(queryText){
@@ -37,7 +36,7 @@ class Chatbot extends React.Component{
             }
         };
         this.setState({messages:[...this.state.messages, says]});
-        const res = await axios.post('/api/df_text_query', {text:queryText,userID:cookies.get('userID')});
+        const res = await axios.post('/api/df_text_query', {text:queryText});
 
         for(let msg of res.data.fulfillmentMessages){
             //console.log(JSON.stringify(msg));
@@ -50,7 +49,7 @@ class Chatbot extends React.Component{
     }
 
     async df_event_query(eventName){
-        const res = await axios.post('/api/df_event_query', {event:eventName,userID:cookies.get('userID')});
+        const res = await axios.post('/api/df_event_query', {event:eventName});
         for(let msg of res.data.fulfillmentMessages){
             let says={
                 speaks:'Khushi',
@@ -81,19 +80,15 @@ class Chatbot extends React.Component{
 
 
 
-    _handleQuickReplyPayload(payload,text){
-        switch (payload) {
-            case 'navigation_masterclass':
-                this.df_event_query('MASTERCLASS');
-                break;
-            default:
-                this.df_text_query(text);
-        }
-    }
-
-    renderCards(cards){
-        return cards.map((card,i)=> <Card key={i} payload={card.structValue} />)
-    }
+    // _handleQuickReplyPayload(payload,text){
+    //     switch (payload) {
+    //         case 'navigation_masterclass':
+    //             this.df_event_query('MASTERCLASS');
+    //             break;
+    //         default:
+    //             this.df_text_query(text);
+    //     }
+    // }
 
     renderOneMessages(message,i){
         if(message.msg && message.msg.text && message.msg.text.text){
@@ -148,7 +143,7 @@ class Chatbot extends React.Component{
     render() {
         if(this.state.showBot){
             return(
-                <div style={{height:500, width:400, position:'absolute', bottom:0, right:0, border:'1px solid lightgrey'}}>
+                <div style={{minHeight:400, maxHeight:500, width:400, position:'absolute', bottom:0, right:0, border:'1px solid lightgrey'}}>
                 <nav>
                     <div className="nav-wrapper">
                         <a className="brand-logo">Chatbot</a>
@@ -157,10 +152,11 @@ class Chatbot extends React.Component{
                         </ul>
                     </div>
                 </nav>
-                    <div id="chatbot" style={{height:388, width:'100%', overflow:'auto'}}>
+                    <div id="chatbot" style={{minHeight:340, maxHeight:340, width:'100%', background:'white', overflow:'auto'}}>
                      
                     {this.renderMessages(this.state.messages)}
-                    <div ref={(el) => {this.messagesEnd = el;}} style={{float:"left", clear:"both"}}></div>
+                    <div style={{float:'left', clear:"both"}} 
+                    ref={(el) => {this.messagesEnd = el;}}></div>
                     </div>
                     <div className="col s12">
                         <input style={{margin:0, paddingLeft:'1%', paddingRight:'1%', width:'98%'}} placeholder="type s message" type="text" ref={(input)=>{this.inputFocus=input;}} onKeyPress={this._handleInputKeyPress}/>
@@ -172,7 +168,7 @@ class Chatbot extends React.Component{
                 <div style={{height:40, width:400, position:'absolute', bottom:0, right:0, border:'1px solid lightgrey'}}>
                 <nav>     
                     <div className="nav-wrapper">
-                        <a className="brand-logo">Chatbot</a>
+                        <a className="brand-logo">Messanger</a>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><a onClick={this.show}>Show</a></li>
                         </ul>
