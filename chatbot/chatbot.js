@@ -72,31 +72,32 @@ module.exports = {
             return responses;
     },
     handleAction: function(responses){
-        let self = module.exports;
-        let queryResult = responses[0].queryResult;
+        // let self = module.exports;
+        // let queryResult = responses[0].queryResult;
 
-        switch (queryResult.action){
-            case 'listofwells.listofwells-yes':
-            if(queryResult.allRequiredParamsPresent){
-                self.saveRegistration(queryResult.parameters.fields);
-            }
-            break;
-        }
+        // switch (queryResult.action){
+        //     case 'listofwells.listofwells-yes':
+        //     if(queryResult.allRequiredParamsPresent){
+        //         self.saveRegistration(queryResult.parameters.fields);
+        //     }
+        //     break;
+        // }
         return responses;
-    },
-    saveRegistration: async function(fields){
-        const registration = new Registration({
-            name: fields.name.stringValue,
-            phone: fields.phone.stringValue,
-            email: fields.email.stringValue,
-            dateSent: Date.now()
-        });
-        try{
-            let reg = await registration.save();
-            console.log(reg);
-        } catch (err){
-            console.log(err);
-        }
+    //}
+    //stores data using model schema but here its unnecessary
+    // saveRegistration: async function(fields){
+    //     const registration = new Registration({
+    //         name: fields.name.stringValue,
+    //         phone: fields.phone.stringValue,
+    //         email: fields.email.stringValue,
+    //         dateSent: Date.now()
+    //     });
+    //     try{
+    //         let reg = await registration.save();
+    //         console.log(reg);
+    //     } catch (err){
+    //         console.log(err);
+    //     }
 
     }
 }

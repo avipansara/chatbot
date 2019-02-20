@@ -3,7 +3,7 @@ import axios from 'axios/index';
 //import Cookies from 'universal-cookie';
 //import {v4 as uuid} from 'uuid'; 
 import Message from './Message';
-import QuickReplies from './QuickReplies';
+//import QuickReplies from './QuickReplies';
 
 //const cookies = new Cookies(); 
 
@@ -66,8 +66,7 @@ class Chatbot extends React.Component{
         this.messagesEnd.scrollIntoView({behaviour:"smooth"});
         if(this.inputFocus){
             this.inputFocus.focus();
-        }
-        
+        }    
     }
 
     show(){
@@ -90,6 +89,7 @@ class Chatbot extends React.Component{
     //     }
     // }
 
+    
     renderOneMessages(message,i){
         if(message.msg && message.msg.text && message.msg.text.text){
             return <Message key={i} speaks={message.speaks} text={message.msg.text.text} />;
@@ -110,20 +110,20 @@ class Chatbot extends React.Component{
                 </div>
             </div>
             )
-        }   else if (message.msg &&
-                message.msg.payload &&
-                message.msg.payload.fields &&
-                message.msg.payload.fields.quick_replies
-            ) {
-                return <QuickReplies
-                    text={message.msg.payload.fields.text ? message.msg.payload.fields.text : null}
-                    key={i} r
-                    replyClick={this._handleQuickReplyPayload}
-                    speaks={message.speaks}
-                    payload={message.msg.payload.fields.quick_replies.listValue.values}/>;
-            }
+        // }   else if (message.msg &&
+        //         message.msg.payload &&
+        //         message.msg.payload.fields &&
+        //         message.msg.payload.fields.quick_replies
+        //     ) {
+        //         return <QuickReplies
+        //             text={message.msg.payload.fields.text ? message.msg.payload.fields.text : null}
+        //             key={i} r
+        //             replyClick={this._handleQuickReplyPayload}
+        //             speaks={message.speaks}
+        //             payload={message.msg.payload.fields.quick_replies.listValue.values}/>;
+        //     }
         }
-
+    }
     renderMessages(stateMessage){
         if(stateMessage){
             return stateMessage.map((message, i)=>{
@@ -140,6 +140,7 @@ class Chatbot extends React.Component{
             e.target.value='';
         }
     }
+
     render() {
         if(this.state.showBot){
             return(
